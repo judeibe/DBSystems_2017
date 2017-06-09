@@ -1,5 +1,6 @@
 package edu.govst.dbms;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.govst.dbms.model.Patient;
 import edu.govst.dbms.service.PatientService;
 import org.junit.Before;
@@ -16,10 +17,11 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.time.LocalDate;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.containsString;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @RunWith(SpringRunner.class)
@@ -34,6 +36,15 @@ public class GroupProjectApplicationTests {
 	@InjectMocks
 	private PatientController patientController;
 
+    public static String asJsonString(final Object obj) {
+        try {
+            final ObjectMapper mapper = new ObjectMapper();
+            return mapper.writeValueAsString(obj);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 	@Before
 	public void init(){
 		MockitoAnnotations.initMocks(this);
@@ -42,15 +53,14 @@ public class GroupProjectApplicationTests {
 				.build();
 	}
 
-
 	@Test
 	public void contextLoads() {
 	}
 
 	@Test
 	public void test_add_patient_success() throws Exception {
-		Patient patient = new Patient()"Tom", "L", "Sawyer", LocalDate.of(1988,12,14));
-		when(patientService.exists(patient)).thenReturn(false);
+        Patient patient = new Patient("Tom", "L", "Sawyer", LocalDate.of(1988, 12, 14));
+        when(patientService.exists(patient)).thenReturn(false);
 		doNothing().when(patientService).create(patient);
 		mockMvc.perform(post("/patients")
 				.contentType(MediaType.APPLICATION_JSON)
@@ -61,7 +71,6 @@ public class GroupProjectApplicationTests {
 		verify(patientService, times(1)).create(patient);
 		verifyNoMoreInteractions(patientService);
 	}
-
 
 
 }
