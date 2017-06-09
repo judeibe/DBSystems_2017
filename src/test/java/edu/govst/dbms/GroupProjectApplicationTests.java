@@ -1,6 +1,7 @@
 package edu.govst.dbms;
 
 import edu.govst.dbms.model.Patient;
+import edu.govst.dbms.service.PatientService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,9 +16,11 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.time.LocalDate;
 
-import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -46,8 +49,8 @@ public class GroupProjectApplicationTests {
 
 	@Test
 	public void test_add_patient_success() throws Exception {
-		Patient patient = new Patient("Tom", "L", "Sawyer", LocalDate.of(1988,12,14));
-		when(patientService.exits(patient).thenReturn(false));
+		Patient patient = new Patient()"Tom", "L", "Sawyer", LocalDate.of(1988,12,14));
+		when(patientService.exists(patient)).thenReturn(false);
 		doNothing().when(patientService).create(patient);
 		mockMvc.perform(post("/patients")
 				.contentType(MediaType.APPLICATION_JSON)

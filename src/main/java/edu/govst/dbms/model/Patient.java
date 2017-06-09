@@ -1,10 +1,11 @@
 package edu.govst.dbms.model;
 
 import lombok.Data;
+import lombok.Value;
 
 import java.time.LocalDate;
 
-@Data
+@Value
 public class Patient {
     public String firstName;
     public String middleName;
