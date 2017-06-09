@@ -1,14 +1,25 @@
 package edu.govst.dbms.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Value;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.time.LocalDate;
 
-@Value
+@Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor()
 public class Patient {
-    public String firstName;
-    public String middleName;
-    public String lastName;
-    public LocalDate birthDate;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long patientId;
+    private String firstName;
+    private String middleName;
+    private String lastName;
+    private LocalDate birthDate;
 }

@@ -59,7 +59,12 @@ public class GroupProjectApplicationTests {
 
 	@Test
 	public void test_add_patient_success() throws Exception {
-        Patient patient = new Patient("Tom", "L", "Sawyer", LocalDate.of(1988, 12, 14));
+        Patient patient = new Patient();
+        patient.setPatientId(1);
+        patient.setFirstName("Tom");
+        patient.setMiddleName("L");
+        patient.setLastName("Sawyer");
+        patient.setBirthDate(LocalDate.of(1988, 12, 14));
         when(patientService.exists(patient)).thenReturn(false);
 		doNothing().when(patientService).create(patient);
 		mockMvc.perform(post("/patients")
