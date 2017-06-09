@@ -1,5 +1,6 @@
 package edu.govst.dbms;
 
+import edu.govst.dbms.model.Patient;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
