@@ -1,6 +1,7 @@
 package edu.govst.dbms;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.govst.dbms.controller.PatientController;
 import edu.govst.dbms.model.Patient;
 import edu.govst.dbms.service.PatientService;
 import org.junit.Before;
