@@ -21,6 +21,7 @@ import java.time.LocalDate;
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -89,14 +90,21 @@ public class GroupProjectApplicationTests {
         verifyNoMoreInteractions(patientService);
     }
 
-    /*
+
     @Test
-    public void test_update_service() throws Exception {
-	    Patient patient = new Patient(2, "John", "T", "Adams",LocalDate.of(1988, 12, 14));
+    public void test_update_service_success() throws Exception {
+        Patient patient = new Patient(2, "John", "T", "Adams",LocalDate.of(1988, 12, 14));
         when(patientService.findById(patient.getPatientId())).thenReturn(patient);
         doNothing().when(patientService).update(patient);
+        mockMvc.perform(
+                put("/patient/{id}", patient.getPatientId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(patient))
+        );
+        verify(patientService, times(1)).findById(patient.getPatientId());
+        verify(patientService, times(1)).update(patient);
+        verifyNoMoreInteractions();
     }
-    */
 
 
 }
