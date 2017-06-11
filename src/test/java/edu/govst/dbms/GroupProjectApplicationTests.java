@@ -73,7 +73,7 @@ public class GroupProjectApplicationTests {
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(asJsonString(patient)))
 				.andExpect(status().isCreated())
-                .andExpect(header().string("location", containsString("/patients/1")));
+                .andExpect(header().string("location", containsString("/patient/1")));
         verify(patientService, times(1)).exists(patient);
         verify(patientService, times(1)).create(patient);
         verifyNoMoreInteractions(patientService);

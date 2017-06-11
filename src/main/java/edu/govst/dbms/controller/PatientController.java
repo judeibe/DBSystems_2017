@@ -37,8 +37,8 @@ public class PatientController {
         patientService.create(patient);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ucBuilder.path("/users/{id}").buildAndExpand(patient.getPatientId()).toUri());
+        headers.setLocation(ucBuilder.path("/patient/{id}").buildAndExpand(patient.getPatientId()).toUri());
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 }
