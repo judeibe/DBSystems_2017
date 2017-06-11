@@ -59,25 +59,44 @@ public class GroupProjectApplicationTests {
 	public void contextLoads() {
 	}
 
-	@Test
-	public void test_add_patient_success() throws Exception {
-        Patient patient = new Patient();
-        patient.setPatientId(1);
-        patient.setFirstName("Tom");
-        patient.setMiddleName("L");
-        patient.setLastName("Sawyer");
-        patient.setBirthDate(LocalDate.of(1988, 12, 14));
+    //create user tests
+    @Test
+    public void test_create_patient_success() throws Exception {
+        Patient patient = new Patient(1, "Tom", "L", "Sawyer", LocalDate.of(1988, 12, 14));
         when(patientService.exists(patient)).thenReturn(false);
 		doNothing().when(patientService).create(patient);
-		mockMvc.perform(post("/patients")
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(asJsonString(patient)))
-				.andExpect(status().isCreated())
+        mockMvc.perform(
+                post("/patients")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(patient)))
+                .andExpect(status().isCreated())
                 .andExpect(header().string("location", containsString("/patient/1")));
         verify(patientService, times(1)).exists(patient);
         verify(patientService, times(1)).create(patient);
         verifyNoMoreInteractions(patientService);
     }
+
+    @Test
+    public void test_create_patient_fail() throws Exception {
+        Patient patient = new Patient();
+        when(patientService.exists(patient)).thenReturn(true);
+        mockMvc.perform(
+                post("/patients")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(patient)))
+                .andExpect(status().isConflict());
+        verify(patientService, times(1)).exists(patient);
+        verifyNoMoreInteractions(patientService);
+    }
+
+    /*
+    @Test
+    public void test_update_service() throws Exception {
+	    Patient patient = new Patient(2, "John", "T", "Adams",LocalDate.of(1988, 12, 14));
+        when(patientService.findById(patient.getPatientId())).thenReturn(patient);
+        doNothing().when(patientService).update(patient);
+    }
+    */
 
 
 }
