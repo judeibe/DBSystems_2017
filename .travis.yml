@@ -1,5 +1,5 @@
 #install: echo "skip 'gradle assemble' step"
-script: gradle build --continue
+#script: gradle build --continue
 language: java
 jdk:
   - oraclejdk8
