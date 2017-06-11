@@ -1,4 +1,4 @@
-install: echo "skip 'gradle assemble' step"
+#install: echo "skip 'gradle assemble' step"
 script: gradle build --continue
 language: java
 jdk:
