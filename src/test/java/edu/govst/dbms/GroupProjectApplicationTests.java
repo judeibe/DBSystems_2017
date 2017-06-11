@@ -40,6 +40,7 @@ public class GroupProjectApplicationTests {
     public static String asJsonString(final Object obj) {
         try {
             final ObjectMapper mapper = new ObjectMapper();
+            mapper.findAndRegisterModules();
             return mapper.writeValueAsString(obj);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -72,11 +73,11 @@ public class GroupProjectApplicationTests {
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(asJsonString(patient)))
 				.andExpect(status().isCreated())
-				.andExpect(header().string("location", containsString("/patients/0")));
-		verify(patientService, times(1)).exists(patient);
-		verify(patientService, times(1)).create(patient);
-		verifyNoMoreInteractions(patientService);
-	}
+                .andExpect(header().string("location", containsString("/patients/1")));
+        verify(patientService, times(1)).exists(patient);
+        verify(patientService, times(1)).create(patient);
+        verifyNoMoreInteractions(patientService);
+    }
 
 
 }
