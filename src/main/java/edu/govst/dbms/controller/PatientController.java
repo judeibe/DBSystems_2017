@@ -71,4 +71,17 @@ public class PatientController {
         patientService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/patient/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Patient> get(@PathVariable long id) {
+        log.info("Getting patient with id: {}, id");
+        Patient patient = patientService.findById(id);
+
+        if (patient == null) {
+            log.info("Patient with id {} not found, id");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(patient, HttpStatus.OK);
+    }
 }

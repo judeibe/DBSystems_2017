@@ -17,8 +17,7 @@ import java.time.LocalDate;
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class PatientServiceImplTest extends GroupProjectApplicationTests {
 
@@ -38,7 +37,31 @@ public class PatientServiceImplTest extends GroupProjectApplicationTests {
                 .build();
     }
 
-    //create user tests
+    @Test
+    public void findById_KnownPatientId_ShouldReturnPatient() throws Exception {
+        Patient patient = new Patient(2, "John", "T", "Adams", LocalDate.of(1988, 12, 14));
+        when(patientService.findById(patient.getPatientId())).thenReturn(patient);
+        mockMvc.perform(
+                get("/patient/{id}", patient.getPatientId()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andExpect(jsonPath("$.patientId").value("2"))
+                .andExpect(jsonPath("$.lastName").value("Adams"));
+        verify(patientService, times(1)).findById(patient.getPatientId());
+        verifyNoMoreInteractions(patientService);
+    }
+
+    @Test
+    public void findById_UnknownPatientId_ShoudReturnStatusIsNotFound() throws Exception {
+        Patient patient = new Patient();
+        when(patientService.findById(patient.getPatientId())).thenReturn(null);
+        mockMvc.perform(
+                get("/patient/{id}", patient.getPatientId()))
+                .andExpect(status().isNotFound());
+        verify(patientService, times(1)).findById(patient.getPatientId());
+        verifyNoMoreInteractions(patientService);
+    }
+
     @Test
     public void create_NewPatient_ShouldCreateNewPatient() throws Exception {
         Patient patient = new Patient(1, "Tom", "L", "Sawyer", LocalDate.of(1988, 12, 14));
@@ -119,4 +142,5 @@ public class PatientServiceImplTest extends GroupProjectApplicationTests {
         verify(patientService, times(1)).findById(patient.getPatientId());
         verifyNoMoreInteractions(patientService);
     }
+
 }
