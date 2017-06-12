@@ -47,10 +47,7 @@ public class PatientController {
         log.info("Updating patient: {}", patient);
         Patient currentPatient = patientService.findById(id);
 
-        if (currentPatient == null) {
-            log.info("Patient with id {} not found", id);
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        if (isNull(id, currentPatient)) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         currentPatient = patient;
 
@@ -58,15 +55,20 @@ public class PatientController {
         return new ResponseEntity<>(currentPatient, HttpStatus.OK);
     }
 
+    private boolean isNull(@PathVariable long id, Patient currentPatient) {
+        if (currentPatient == null) {
+            log.info("Patient with id {} not found", id);
+            return true;
+        }
+        return false;
+    }
+
     @RequestMapping(value = "/patient/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> delete(@PathVariable long id) {
         log.info("Deleting patient with id: {}", id);
         Patient patient = patientService.findById(id);
 
-        if (patient == null) {
-            log.info("Patient with id {} not found", id);
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        if (isNull(id, patient)) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         patientService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -77,10 +79,7 @@ public class PatientController {
         log.info("Getting patient with id: {}, id");
         Patient patient = patientService.findById(id);
 
-        if (patient == null) {
-            log.info("Patient with id {} not found, id");
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        if (isNull(id, patient)) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         return new ResponseEntity<>(patient, HttpStatus.OK);
     }
