@@ -34,4 +34,10 @@ public class PatientServiceImpl implements PatientService {
     public void update(Patient patient) {
         patientRepository.saveAndFlush(patient);
     }
+
+    @Override
+    public void delete(long id) {
+        Patient patient = findById(id);
+        patientRepository.delete(patient);
+    }
 }

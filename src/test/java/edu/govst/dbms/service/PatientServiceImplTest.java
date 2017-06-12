@@ -16,8 +16,7 @@ import java.time.LocalDate;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -97,4 +96,16 @@ public class PatientServiceImplTest extends GroupProjectApplicationTests {
         verifyNoMoreInteractions(patientService);
     }
 
+    @Test
+    public void delete_KnownPatientId_ShouldDeletePatient() throws Exception {
+        Patient patient = new Patient(2, "John", "T", "Adams", LocalDate.of(1988, 12, 14));
+        when(patientService.findById(patient.getPatientId())).thenReturn(patient);
+        doNothing().when(patientService).delete(patient.getPatientId());
+        mockMvc.perform(
+                delete("/patient/{id}", patient.getPatientId()))
+                .andExpect(status().isOk());
+        verify(patientService, times(1)).findById(patient.getPatientId());
+        verify(patientService, times(1)).delete(patient.getPatientId());
+        verifyNoMoreInteractions(patientService);
+    }
 }

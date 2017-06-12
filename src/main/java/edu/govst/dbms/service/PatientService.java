@@ -10,4 +10,6 @@ public interface PatientService {
     boolean exists(Patient patient);
 
     void update(Patient patient);
+
+    void delete(long id);
 }
