@@ -108,4 +108,15 @@ public class PatientServiceImplTest extends GroupProjectApplicationTests {
         verify(patientService, times(1)).delete(patient.getPatientId());
         verifyNoMoreInteractions(patientService);
     }
+
+    @Test
+    public void delete_UnknownPatientId_ShouldReturnStatusIsNotFound() throws Exception {
+        Patient patient = new Patient();
+        when(patientService.findById(patient.getPatientId())).thenReturn(null);
+        mockMvc.perform(
+                delete("/patient/{id}", patient.getPatientId()))
+                .andExpect(status().isNotFound());
+        verify(patientService, times(1)).findById(patient.getPatientId());
+        verifyNoMoreInteractions(patientService);
+    }
 }
