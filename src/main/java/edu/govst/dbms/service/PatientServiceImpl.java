@@ -17,7 +17,7 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public Patient findById(long id) {
-        return null;
+        return patientRepository.findOne(id);
     }
 
     @Override
@@ -32,6 +32,6 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public void update(Patient patient) {
-
+        patientRepository.saveAndFlush(patient);
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,7 +16,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
 @Slf4j
-@RequestMapping("/patients")
 public class PatientController {
 
     private PatientService patientService;
@@ -25,7 +25,7 @@ public class PatientController {
         this.patientService = patientService;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "/patients", method = RequestMethod.POST)
     public ResponseEntity<Void> create(@RequestBody Patient patient, UriComponentsBuilder ucBuilder) {
         log.info("Creating new patient: {}", patient);
 
@@ -40,5 +40,22 @@ public class PatientController {
         headers.setLocation(ucBuilder.path("/patient/{id}").buildAndExpand(patient.getPatientId()).toUri());
 
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/patient/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<Patient> update(@PathVariable long id, @RequestBody Patient patient) {
+        log.info("Updating patient: {}", patient);
+        Patient currentPatient = patientService.findById(id);
+
+        if (currentPatient == null) {
+            log.info("Patient with id {} not found", id);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        currentPatient = patient;
+
+        patientService.update(patient);
+        return new ResponseEntity<>(currentPatient, HttpStatus.OK);
+
     }
 }
