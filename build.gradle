@@ -31,6 +31,9 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
 	runtime('org.mariadb.jdbc:mariadb-java-client')
 	compile('com.h2database:h2')
+	compile('com.fasterxml.jackson.module:jackson-module-parameter-names')
+	compile('com.fasterxml.jackson.datatype:jackson-datatype-jdk8')
+	compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
 	compileOnly('org.projectlombok:lombok')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
