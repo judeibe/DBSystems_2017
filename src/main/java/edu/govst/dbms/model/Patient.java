@@ -1,6 +1,7 @@
 package edu.govst.dbms.model;
 
 import lombok.Data;
+import lombok.NonNull;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,8 +16,10 @@ public class Patient {
     @GeneratedValue
     private long patientId;
 
+    @NonNull
     private String firstName;
 
+    @NonNull
     private String lastName;
 
     private String gender;
@@ -31,6 +34,7 @@ public class Patient {
 
     private String phone;
 
+    @NonNull
     private Boolean admitted;
 
     private String otherDetails;
