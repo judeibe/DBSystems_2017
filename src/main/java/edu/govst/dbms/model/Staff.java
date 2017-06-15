@@ -3,6 +3,7 @@ package edu.govst.dbms.model;
 import lombok.Data;
 import lombok.NonNull;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -16,9 +17,11 @@ public class Staff {
     private long staffId;
 
     @NonNull
+    @Column(nullable = false)
     private String firstName;
 
     @NonNull
+    @Column(nullable = false)
     private String lastName;
 
     private String position;

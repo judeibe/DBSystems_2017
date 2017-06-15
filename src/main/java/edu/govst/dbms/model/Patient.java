@@ -3,10 +3,7 @@ package edu.govst.dbms.model;
 import lombok.Data;
 import lombok.NonNull;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
@@ -17,9 +14,11 @@ public class Patient {
     private long patientId;
 
     @NonNull
+    @Column(nullable = false)
     private String firstName;
 
     @NonNull
+    @Column(nullable = false)
     private String lastName;
 
     private String gender;
