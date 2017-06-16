@@ -74,6 +74,8 @@ public class PatientServiceImplTest extends GroupProjectApplicationTests {
     @Test
     public void findById_UnknownPatientId_ShoudReturnStatusIsNotFound() throws Exception {
         Patient patient = new Patient();
+        Address address = new Address();
+        patient.setAddress(address);
         when(patientService.findById(patient.getPatientId())).thenReturn(null);
         mockMvc.perform(
                 get("/patient/{id}", patient.getPatientId()))
@@ -120,6 +122,8 @@ public class PatientServiceImplTest extends GroupProjectApplicationTests {
     @Test
     public void create_ExistingPatient_ShouldReturnStatusIsConflict() throws Exception {
         Patient patient = new Patient();
+        Address address = new Address();
+        patient.setAddress(address);
         when(patientService.exists(patient)).thenReturn(true);
         mockMvc.perform(
                 post("/patients")

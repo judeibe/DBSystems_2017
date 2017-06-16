@@ -1,10 +1,11 @@
 package edu.govst.dbms.model;
 
 import lombok.Data;
-import lombok.NonNull;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -13,11 +14,9 @@ public class Patient {
     @GeneratedValue
     private long patientId;
 
-    @NonNull
     @Column(nullable = false)
     private String firstName;
 
-    @NonNull
     @Column(nullable = false)
     private String lastName;
 
@@ -33,13 +32,19 @@ public class Patient {
 
     private String phone;
 
-    @NonNull
     private Boolean admitted;
 
     private String otherDetails;
 
     @ManyToOne
     private Address address;
+
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<PatientRecord> patientRecord = new HashSet<>();
+
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Admission> admissions = new HashSet<>();
+
 
     public Patient() {
     }

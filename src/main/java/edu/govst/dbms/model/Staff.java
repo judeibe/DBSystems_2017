@@ -1,12 +1,13 @@
 package edu.govst.dbms.model;
 
 import lombok.Data;
-import lombok.NonNull;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -16,15 +17,17 @@ public class Staff {
     @GeneratedValue
     private long staffId;
 
-    @NonNull
-    @Column(nullable = false)
     private String firstName;
 
-    @NonNull
-    @Column(nullable = false)
     private String lastName;
 
     private String position;
+
+    @OneToMany(mappedBy = "staff")
+    private Set<PatientRecord> patientRecords = new HashSet<>();
+
+    @OneToMany(mappedBy = "staff")
+    private Set<Admission> admissions = new HashSet<>();
 
     public Staff() {
     }
@@ -35,4 +38,5 @@ public class Staff {
         this.lastName = lastName;
         this.position = position;
     }
+
 }
