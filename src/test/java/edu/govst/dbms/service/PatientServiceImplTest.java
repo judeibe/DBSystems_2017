@@ -2,6 +2,7 @@ package edu.govst.dbms.service;
 
 import edu.govst.dbms.GroupProjectApplicationTests;
 import edu.govst.dbms.controller.PatientController;
+import edu.govst.dbms.model.Address;
 import edu.govst.dbms.model.Patient;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,13 +40,32 @@ public class PatientServiceImplTest extends GroupProjectApplicationTests {
 
     @Test
     public void findById_KnownPatientId_ShouldReturnPatient() throws Exception {
-        Patient patient = new Patient(2, "John", "T", "Adams", LocalDate.of(1988, 12, 14));
+        Address address = new Address();
+        address.setAddressId(1);
+        address.setAddressLine1("123 Main St");
+        address.setAddressLine2(null);
+        address.setCity("Hershey");
+        address.setState("WA");
+        address.setZipCode(12345);
+        Patient patient = new Patient();
+        patient.setPatientId(1);
+        patient.setFirstName("John");
+        patient.setLastName("Adams");
+        patient.setGender("M");
+        patient.setBirthDate(LocalDate.of(1988, 12, 14));
+        patient.setHeight(66);
+        patient.setWeight(145);
+        patient.setNextOfKin("Tom Sawyer");
+        patient.setPhone("123-456-789");
+        patient.setAdmitted(false);
+        patient.setOtherDetails(null);
+        patient.setAddress(address);
         when(patientService.findById(patient.getPatientId())).thenReturn(patient);
         mockMvc.perform(
                 get("/patient/{id}", patient.getPatientId()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$.patientId").value("2"))
+                .andExpect(jsonPath("$.patientId").value("1"))
                 .andExpect(jsonPath("$.lastName").value("Adams"));
         verify(patientService, times(1)).findById(patient.getPatientId());
         verifyNoMoreInteractions(patientService);
@@ -54,6 +74,8 @@ public class PatientServiceImplTest extends GroupProjectApplicationTests {
     @Test
     public void findById_UnknownPatientId_ShoudReturnStatusIsNotFound() throws Exception {
         Patient patient = new Patient();
+        Address address = new Address();
+        patient.setAddress(address);
         when(patientService.findById(patient.getPatientId())).thenReturn(null);
         mockMvc.perform(
                 get("/patient/{id}", patient.getPatientId()))
@@ -64,7 +86,26 @@ public class PatientServiceImplTest extends GroupProjectApplicationTests {
 
     @Test
     public void create_NewPatient_ShouldCreateNewPatient() throws Exception {
-        Patient patient = new Patient(1, "Tom", "L", "Sawyer", LocalDate.of(1988, 12, 14));
+        Address address = new Address();
+        address.setAddressId(1);
+        address.setAddressLine1("123 Main St");
+        address.setAddressLine2(null);
+        address.setCity("Hershey");
+        address.setState("WA");
+        address.setZipCode(12345);
+        Patient patient = new Patient();
+        patient.setPatientId(1);
+        patient.setFirstName("John");
+        patient.setLastName("Adams");
+        patient.setGender("M");
+        patient.setBirthDate(LocalDate.of(1988, 12, 14));
+        patient.setHeight(66);
+        patient.setWeight(145);
+        patient.setNextOfKin("Tom Sawyer");
+        patient.setPhone("123-456-789");
+        patient.setAdmitted(false);
+        patient.setOtherDetails(null);
+        patient.setAddress(address);
         when(patientService.exists(patient)).thenReturn(false);
         doNothing().when(patientService).create(patient);
         mockMvc.perform(
@@ -81,6 +122,8 @@ public class PatientServiceImplTest extends GroupProjectApplicationTests {
     @Test
     public void create_ExistingPatient_ShouldReturnStatusIsConflict() throws Exception {
         Patient patient = new Patient();
+        Address address = new Address();
+        patient.setAddress(address);
         when(patientService.exists(patient)).thenReturn(true);
         mockMvc.perform(
                 post("/patients")
@@ -93,7 +136,26 @@ public class PatientServiceImplTest extends GroupProjectApplicationTests {
 
     @Test
     public void update_UpdatedPatient_ShouldUpdateExistingPatient() throws Exception {
-        Patient patient = new Patient(2, "John", "T", "Adams", LocalDate.of(1988, 12, 14));
+        Address address = new Address();
+        address.setAddressId(1);
+        address.setAddressLine1("123 Main St");
+        address.setAddressLine2(null);
+        address.setCity("Hershey");
+        address.setState("WA");
+        address.setZipCode(12345);
+        Patient patient = new Patient();
+        patient.setPatientId(1);
+        patient.setFirstName("John");
+        patient.setLastName("Adams");
+        patient.setGender("M");
+        patient.setBirthDate(LocalDate.of(1988, 12, 14));
+        patient.setHeight(66);
+        patient.setWeight(145);
+        patient.setNextOfKin("Tom Sawyer");
+        patient.setPhone("123-456-789");
+        patient.setAdmitted(false);
+        patient.setOtherDetails(null);
+        patient.setAddress(address);
         when(patientService.findById(patient.getPatientId())).thenReturn(patient);
         doNothing().when(patientService).update(patient);
         mockMvc.perform(
@@ -121,7 +183,26 @@ public class PatientServiceImplTest extends GroupProjectApplicationTests {
 
     @Test
     public void delete_KnownPatientId_ShouldDeletePatient() throws Exception {
-        Patient patient = new Patient(2, "John", "T", "Adams", LocalDate.of(1988, 12, 14));
+        Address address = new Address();
+        address.setAddressId(1);
+        address.setAddressLine1("123 Main St");
+        address.setAddressLine2(null);
+        address.setCity("Hershey");
+        address.setState("WA");
+        address.setZipCode(12345);
+        Patient patient = new Patient();
+        patient.setPatientId(1);
+        patient.setFirstName("John");
+        patient.setLastName("Adams");
+        patient.setGender("M");
+        patient.setBirthDate(LocalDate.of(1988, 12, 14));
+        patient.setHeight(66);
+        patient.setWeight(145);
+        patient.setNextOfKin("Tom Sawyer");
+        patient.setPhone("123-456-789");
+        patient.setAdmitted(false);
+        patient.setOtherDetails(null);
+        patient.setAddress(address);
         when(patientService.findById(patient.getPatientId())).thenReturn(patient);
         doNothing().when(patientService).delete(patient.getPatientId());
         mockMvc.perform(
