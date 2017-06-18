@@ -2,10 +2,7 @@ package edu.govst.dbms.model;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -14,10 +11,13 @@ public class PatientRecord implements Serializable {
 
     public String notes;
     @Id
+    @GeneratedValue
+    long patientRecordId;
     @ManyToOne
     @JoinColumn(name = "patientId")
     private Patient patient;
-    @Id
+
+
     @ManyToOne
     @JoinColumn(name = "staffId")
     private Staff staff;

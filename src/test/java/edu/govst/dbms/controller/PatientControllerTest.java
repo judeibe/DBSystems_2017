@@ -1,17 +1,17 @@
-package edu.govst.dbms.service;
+package edu.govst.dbms.controller;
 
-import edu.govst.dbms.GroupProjectApplicationTests;
-import edu.govst.dbms.controller.PatientController;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.govst.dbms.model.Address;
 import edu.govst.dbms.model.Patient;
-import org.junit.Before;
+import edu.govst.dbms.service.PatientService;
 import org.junit.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.time.LocalDate;
 
@@ -20,22 +20,24 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-public class PatientServiceImplTest extends GroupProjectApplicationTests {
+@RunWith(SpringRunner.class)
+@WebMvcTest(PatientController.class)
+public class PatientControllerTest {
 
+    @Autowired
     private MockMvc mockMvc;
 
-    @Mock
+    @MockBean
     private PatientService patientService;
 
-    @InjectMocks
-    private PatientController patientController;
-
-    @Before
-    public void init() {
-        MockitoAnnotations.initMocks(this);
-        mockMvc = MockMvcBuilders
-                .standaloneSetup(patientController)
-                .build();
+    public static String asJsonString(final Object obj) {
+        try {
+            final ObjectMapper mapper = new ObjectMapper();
+            mapper.findAndRegisterModules();
+            return mapper.writeValueAsString(obj);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
@@ -72,7 +74,7 @@ public class PatientServiceImplTest extends GroupProjectApplicationTests {
     }
 
     @Test
-    public void findById_UnknownPatientId_ShoudReturnStatusIsNotFound() throws Exception {
+    public void findById_UnknownPatientId_ShouldReturnStatusIsNotFound() throws Exception {
         Patient patient = new Patient();
         Address address = new Address();
         patient.setAddress(address);

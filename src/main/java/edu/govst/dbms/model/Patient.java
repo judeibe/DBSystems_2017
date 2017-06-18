@@ -9,6 +9,7 @@ import java.util.Set;
 
 @Entity
 @Data
+@Table(name = "patient")
 public class Patient {
     @Id
     @GeneratedValue
@@ -36,7 +37,8 @@ public class Patient {
 
     private String otherDetails;
 
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "addressId")
     private Address address;
 
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
