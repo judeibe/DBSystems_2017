@@ -14,16 +14,16 @@ import java.time.LocalDate;
 public class Admission implements Serializable {
 
     @Id
+    private long admissionID;
+
     @ManyToOne
     @JoinColumn(name = "patientId")
     private Patient patient;
 
-    @Id
     @ManyToOne
     @JoinColumn(name = "staffId")
     private Staff staff;
 
-    @Id
     @ManyToOne
     @JoinColumn(name = "roomNumber")
     private Room room;

@@ -2,15 +2,13 @@ package edu.govst.dbms.model;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Data
+@Table(name = "staff")
 public class Staff {
 
     @Id
