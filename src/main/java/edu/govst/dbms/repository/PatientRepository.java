@@ -10,5 +10,7 @@ import javax.transaction.Transactional;
 public interface PatientRepository extends JpaRepository<Patient, Long> {
     @Transactional
     java.util.Optional<Patient> findByPatientId(long patientId);
+
+    Patient findPatientByFirstNameAndLastName(String firstName, String lastName);
 }
 

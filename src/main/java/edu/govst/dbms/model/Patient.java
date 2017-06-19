@@ -1,6 +1,7 @@
 package edu.govst.dbms.model;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -18,11 +19,14 @@ public class Patient {
     @Column(nullable = false)
     private String firstName;
 
+    private String middleName;
+
     @Column(nullable = false)
     private String lastName;
 
     private String gender;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
 
     private long height;
@@ -37,9 +41,11 @@ public class Patient {
 
     private String otherDetails;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "addressId")
-    private Address address;
+    private String addressLine1;
+    private String addressLine2;
+    private String city;
+    private String state;
+    private int zipCode;
 
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<PatientRecord> patientRecord = new HashSet<>();
@@ -51,8 +57,9 @@ public class Patient {
     public Patient() {
     }
 
-    public Patient(String firstName, String lastName, String gender, LocalDate birthDate, long height, long weight, String nextOfKin, String phone, Boolean admitted, String otherDetails, Address address) {
+    public Patient(String firstName, String middleName, String lastName, String gender, LocalDate birthDate, long height, long weight, String nextOfKin, String phone, Boolean admitted, String otherDetails, String addressLine1, String addressLine2, String city, String state, int zipCode, Set<PatientRecord> patientRecord, Set<Admission> admissions) {
         this.firstName = firstName;
+        this.middleName = middleName;
         this.lastName = lastName;
         this.gender = gender;
         this.birthDate = birthDate;
@@ -62,6 +69,12 @@ public class Patient {
         this.phone = phone;
         this.admitted = admitted;
         this.otherDetails = otherDetails;
-        this.address = address;
+        this.addressLine1 = addressLine1;
+        this.addressLine2 = addressLine2;
+        this.city = city;
+        this.state = state;
+        this.zipCode = zipCode;
+        this.patientRecord = patientRecord;
+        this.admissions = admissions;
     }
 }

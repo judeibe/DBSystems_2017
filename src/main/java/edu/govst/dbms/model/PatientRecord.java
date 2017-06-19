@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 @Entity
 @Data
+@Table(name = "patient_record")
 public class PatientRecord implements Serializable {
 
     public String notes;

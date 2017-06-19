@@ -1,6 +1,5 @@
 package edu.govst.dbms.repository;
 
-import edu.govst.dbms.model.Address;
 import edu.govst.dbms.model.Patient;
 import org.junit.Before;
 import org.junit.Test;

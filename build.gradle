@@ -31,6 +31,7 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-rest')
 	compile('org.flywaydb:flyway-core')
 	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+	compile('org.thymeleaf.extras:thymeleaf-extras-java8time')
 	compile('org.springframework.boot:spring-boot-starter-web')
 	runtime('org.mariadb.jdbc:mariadb-java-client')
 	compile('com.h2database:h2')

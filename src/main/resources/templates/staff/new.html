@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Add Patient</title>
+    <link rel="stylesheet" href="../../static/css/bootstrap.min.css" data-th-href="@{/css/bootstrap.min.css}"/>
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="../../static/css/bootstrap-theme.min.css"
+          data-th-href="@{/css/bootstrap-theme.min.css}"/>
+</head>
+<body>
+<main>
+    <nav class="navbar navbar-inverse navbar-static-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Balance Web Development</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">About</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">Services<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Design</a></li>
+                            <li><a href="#">Development</a></li>
+                            <li><a href="#">Consulting</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div id="wrapper">
+        <h1>Patient Form</h1>
+        <form action="#" th:action="@{/staff/new}" method="post" th:object="${staff}">
+
+            <div class="form-group">
+                <label for="firstName">First Name:</label>
+                <input type="text" name="firstName" id="firstName" required="required" th:field="*{firstName}"/>
+            </div>
+
+
+            <div class="form-group">
+                <label for="lastName">Last Name:</label>
+                <input type="text" id="lastName" th:field="*{lastName}"/>
+            </div>
+
+            <div class="form-group">
+                <label for="position">Phone Number:</label>
+                <input type="text" id="position" required="required" th:field="*{position}"/>
+            </div>
+
+            <br/>
+            <br/>
+            <input class="btn btn-default" type="submit" field="Submit"/>
+        </form>
+    </div>
+</main>
+<footer>
+</footer>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+</body>
+</html>

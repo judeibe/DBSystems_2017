@@ -40,4 +40,11 @@ public class PatientServiceImpl implements PatientService {
         Patient patient = findById(id);
         patientRepository.delete(patient);
     }
+
+    @Override
+    public Patient findPatientByFirstAndLastName(String firstName, String lastName) {
+        return patientRepository.findPatientByFirstNameAndLastName(firstName, lastName);
+    }
+
+
 }

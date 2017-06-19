@@ -2,19 +2,18 @@ package edu.govst.dbms.model;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
 @Data
+@Table(name = "admission")
 public class Admission implements Serializable {
 
     @Id
-    private long admissionID;
+    @GeneratedValue
+    private long admissionId;
 
     @ManyToOne
     @JoinColumn(name = "patientId")

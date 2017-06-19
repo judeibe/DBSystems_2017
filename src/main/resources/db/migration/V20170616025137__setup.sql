@@ -1,20 +1,9 @@
-DROP TABLE IF EXISTS address;
+
 DROP TABLE IF EXISTS patient;
 DROP TABLE IF EXISTS room;
 DROP TABLE IF EXISTS staff;
 DROP TABLE IF EXISTS patient_record;
 DROP TABLE IF EXISTS admission;
-
-CREATE TABLE address
-(
-  address_id    BIGINT AUTO_INCREMENT
-    PRIMARY KEY,
-  address_line1 VARCHAR(255) NULL,
-  address_line2 VARCHAR(255) NULL,
-  city          VARCHAR(255) NULL,
-  state         VARCHAR(255) NULL,
-  zip_code      INT          NOT NULL
-);
 
 CREATE TABLE patient
 (
@@ -23,6 +12,7 @@ CREATE TABLE patient
   admitted      BIT          NULL,
   birth_date    DATE         NULL,
   first_name    VARCHAR(255) NOT NULL,
+  middle_name   VARCHAR(255) NULL,
   gender        VARCHAR(255) NULL,
   height        BIGINT       NOT NULL,
   last_name     VARCHAR(255) NOT NULL,
@@ -30,13 +20,13 @@ CREATE TABLE patient
   other_details VARCHAR(255) NULL,
   phone         VARCHAR(255) NULL,
   weight        BIGINT       NOT NULL,
-  address_id    BIGINT       NULL,
-  CONSTRAINT addressFK
-  FOREIGN KEY (address_id) REFERENCES address (address_id)
+  address_line1 VARCHAR(255) NULL,
+  address_line2 VARCHAR(255) NULL,
+  city          VARCHAR(255) NULL,
+  state         VARCHAR(255) NULL,
+  zip_code      INT          NOT NULL
 );
 
-CREATE INDEX addressIndex
-  ON patient (address_id);
 
 CREATE TABLE room
 (
@@ -56,7 +46,7 @@ CREATE TABLE staff
 
 CREATE TABLE admission
 (
-  admision_id    BIGINT AUTO_INCREMENT
+  admission_id   BIGINT AUTO_INCREMENT
     PRIMARY KEY,
   admit_date     DATE   NULL,
   discharge_date DATE   NULL,

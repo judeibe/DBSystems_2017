@@ -1,7 +1,6 @@
 package edu.govst.dbms.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.govst.dbms.model.Address;
 import edu.govst.dbms.model.Patient;
 import edu.govst.dbms.service.PatientService;
 import org.junit.Test;
@@ -111,7 +110,7 @@ public class PatientControllerTest {
         when(patientService.exists(patient)).thenReturn(false);
         doNothing().when(patientService).create(patient);
         mockMvc.perform(
-                post("/patients")
+                post("/patient")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(patient)))
                 .andExpect(status().isCreated())
@@ -128,7 +127,7 @@ public class PatientControllerTest {
         patient.setAddress(address);
         when(patientService.exists(patient)).thenReturn(true);
         mockMvc.perform(
-                post("/patients")
+                post("/patient")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(patient)))
                 .andExpect(status().isConflict());

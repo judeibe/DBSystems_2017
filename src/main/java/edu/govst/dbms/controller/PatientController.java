@@ -1,45 +1,63 @@
 package edu.govst.dbms.controller;
 
 import edu.govst.dbms.model.Patient;
+import edu.govst.dbms.model.PatientRecord;
+import edu.govst.dbms.service.PatientRecordService;
 import edu.govst.dbms.service.PatientService;
+import edu.govst.dbms.service.StaffService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.util.UriComponentsBuilder;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @Slf4j
 public class PatientController {
 
     private PatientService patientService;
+    private PatientRecordService patientRecordService;
+    private StaffService staffService;
 
     @Autowired
-    public PatientController(PatientService patientService) {
+    public PatientController(PatientService patientService, PatientRecordService patientRecordService, StaffService staffService) {
         this.patientService = patientService;
+        this.patientRecordService = patientRecordService;
+        this.staffService = staffService;
     }
 
-    @RequestMapping(value = "/patients", method = RequestMethod.POST)
-    public ResponseEntity<Void> create(@RequestBody Patient patient, UriComponentsBuilder ucBuilder) {
-        log.info("Creating new patient: {}", patient);
+    @RequestMapping(value = "/patients/new", method = RequestMethod.POST)
+    public String save(Patient patient, BindingResult bindingResult, Model model) {
 
-        if (patientService.exists(patient)) {
-            log.info("A patient with name " + patient.getFirstName() + " already exists");
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        if (bindingResult.hasErrors()) {
+            log.info("There are errors! {}", bindingResult);
+            return "patients/new";
         }
+
+  /*      if (patientService.exists(patient)) {
+            log.info("A patient with name " + patient.getFirstName() + " already exists");
+            return new ModelAndView("/patient/new");
+        }*/
+        log.info("Creating new patient: {}", patient);
 
         patientService.create(patient);
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ucBuilder.path("/patient/{id}").buildAndExpand(patient.getPatientId()).toUri());
+        return "patients/";
+    }
 
-        return new ResponseEntity<>(headers, HttpStatus.CREATED);
+    @RequestMapping(value = "/patients/new", method = RequestMethod.GET)
+    public ModelAndView create() {
+        log.info("Showing patient add view");
+        ModelAndView modelAndView = new ModelAndView("patients/new");
+        modelAndView.addObject(new Patient());
+        return modelAndView;
     }
 
     @RequestMapping(value = "/patient/{id}", method = RequestMethod.PUT)
@@ -75,12 +93,36 @@ public class PatientController {
     }
 
     @RequestMapping(value = "/patient/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Patient> get(@PathVariable long id) {
-        log.info("Getting patient with id: {}, id");
-        Patient patient = patientService.findById(id);
+    public ModelAndView get(@PathVariable long id) {
+        log.info("Getting patient with id: {}", id);
+        ModelAndView modelAndView = new ModelAndView("patient/list", "patient", patientService.findById(id));
+        return modelAndView;
+    }
 
-        if (isNull(id, patient)) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    @RequestMapping(value = "/patient/{id}/addrecord", method = RequestMethod.GET)
+    public ModelAndView createRecord(@PathVariable long id) {
+        log.info("Creating Record for patient with id {}", id);
+        ModelAndView modelAndView = new ModelAndView("patient/addrecord");
+        modelAndView.addObject(new PatientRecord());
+        modelAndView.addObject("allStaff", staffService.findAll());
+        modelAndView.addObject("id", id);
+        return modelAndView;
+    }
 
-        return new ResponseEntity<>(patient, HttpStatus.OK);
+    @RequestMapping(value = "/patient/{id}/addrecord", method = RequestMethod.POST)
+    public String saveRecord(@PathVariable long id, PatientRecord patientRecord, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            log.info("There are errors! {}", bindingResult);
+            return "patients/{id}/addrecord";
+        }
+
+        log.info("Creating new record: {}", patientRecord);
+        patientRecord.setPatient(patientService.findById(id));
+        patientRecord.setStaff(staffService.findById(patientRecord.getStaff().getStaffId()));
+        log.info("Creating new record: {}", patientRecord);
+        patientRecordService.create(patientRecord);
+
+        return "patients/{id}/records";
+
     }
 }

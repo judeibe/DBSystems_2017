@@ -9,3 +9,11 @@ spring:
     show-sql: true
   resources:
     add-mappings: true
+  thymeleaf:
+    cache: true
+    check-template-location: true
+    content-type: text/html
+    encoding: UTF-8
+    mode: HTML5
+    prefix: classpath:/templates/
+    suffix: .html

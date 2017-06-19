@@ -12,4 +12,6 @@ public interface PatientService {
     void update(Patient patient);
 
     void delete(long id);
+
+    Patient findPatientByFirstAndLastName(String firstName, String lastName);
 }
