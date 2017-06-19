@@ -1,6 +1,7 @@
 package edu.govst.dbms.service;
 
 import edu.govst.dbms.model.Patient;
+import edu.govst.dbms.model.PatientRecord;
 import edu.govst.dbms.repository.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,6 +45,11 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public Patient findPatientByFirstAndLastName(String firstName, String lastName) {
         return patientRepository.findPatientByFirstNameAndLastName(firstName, lastName);
+    }
+
+    @Override
+    public void addRecord(PatientRecord patientRecord) {
+
     }
 
 

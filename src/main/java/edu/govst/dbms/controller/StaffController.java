@@ -22,7 +22,7 @@ public class StaffController {
         this.staffService = staffService;
     }
 
-    @RequestMapping(name = "/staff/new", method = RequestMethod.POST)
+    @RequestMapping(value = "/staff/new", method = RequestMethod.POST)
     public String save(Staff staff, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             log.info("There are errors! {}", bindingResult);
@@ -35,7 +35,7 @@ public class StaffController {
         return "/staff";
     }
 
-    @RequestMapping(name = "/staff/new", method = RequestMethod.GET)
+    @RequestMapping(value = "/staff/new", method = RequestMethod.GET)
     public ModelAndView create() {
         log.info("Showing staff add view");
         ModelAndView modelAndView = new ModelAndView("staff/new");

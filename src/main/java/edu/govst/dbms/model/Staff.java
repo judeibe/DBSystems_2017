@@ -1,13 +1,19 @@
 package edu.govst.dbms.model;
 
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode(exclude = {"patientRecords", "admissions"})
+@ToString(exclude = {"patientRecords", "admissions"})
 @Table(name = "staff")
 public class Staff {
 
@@ -21,7 +27,7 @@ public class Staff {
 
     private String position;
 
-    @OneToMany(mappedBy = "staff")
+    @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL)
     private Set<PatientRecord> patientRecords = new HashSet<>();
 
     @OneToMany(mappedBy = "staff")

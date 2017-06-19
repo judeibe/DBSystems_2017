@@ -33,12 +33,12 @@ public class PatientController {
         this.staffService = staffService;
     }
 
-    @RequestMapping(value = "/patients/new", method = RequestMethod.POST)
-    public String save(Patient patient, BindingResult bindingResult, Model model) {
+    @RequestMapping(value = "/patient/new", method = RequestMethod.POST)
+    public String save(Patient patient, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             log.info("There are errors! {}", bindingResult);
-            return "patients/new";
+            return "patient/new";
         }
 
   /*      if (patientService.exists(patient)) {
@@ -113,16 +113,16 @@ public class PatientController {
     public String saveRecord(@PathVariable long id, PatientRecord patientRecord, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             log.info("There are errors! {}", bindingResult);
-            return "patients/{id}/addrecord";
+            return ("/patient/" + id + "/addrecord");
         }
 
         log.info("Creating new record: {}", patientRecord);
-        patientRecord.setPatient(patientService.findById(id));
-        patientRecord.setStaff(staffService.findById(patientRecord.getStaff().getStaffId()));
-        log.info("Creating new record: {}", patientRecord);
+
+        Patient patient = patientService.findById(id);
+        log.info("{}", patient);
+        patientRecord.setPatient(patient);
         patientRecordService.create(patientRecord);
 
-        return "patients/{id}/records";
-
+        return ("patient/" + id);
     }
 }

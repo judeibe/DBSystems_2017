@@ -1,6 +1,7 @@
 package edu.govst.dbms.service;
 
 import edu.govst.dbms.model.Patient;
+import edu.govst.dbms.model.PatientRecord;
 
 public interface PatientService {
     Patient findById(long id);
@@ -14,4 +15,6 @@ public interface PatientService {
     void delete(long id);
 
     Patient findPatientByFirstAndLastName(String firstName, String lastName);
+
+    void addRecord(PatientRecord patientRecord);
 }

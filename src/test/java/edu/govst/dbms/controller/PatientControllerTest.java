@@ -39,15 +39,10 @@ public class PatientControllerTest {
         }
     }
 
+
     @Test
     public void findById_KnownPatientId_ShouldReturnPatient() throws Exception {
-        Address address = new Address();
-        address.setAddressId(1);
-        address.setAddressLine1("123 Main St");
-        address.setAddressLine2(null);
-        address.setCity("Hershey");
-        address.setState("WA");
-        address.setZipCode(12345);
+
         Patient patient = new Patient();
         patient.setPatientId(1);
         patient.setFirstName("John");
@@ -60,7 +55,11 @@ public class PatientControllerTest {
         patient.setPhone("123-456-789");
         patient.setAdmitted(false);
         patient.setOtherDetails(null);
-        patient.setAddress(address);
+        patient.setAddressLine1("123 Main St");
+        patient.setAddressLine2(null);
+        patient.setCity("Hershey");
+        patient.setState("WA");
+        patient.setZipCode(12345);
         when(patientService.findById(patient.getPatientId())).thenReturn(patient);
         mockMvc.perform(
                 get("/patient/{id}", patient.getPatientId()))
@@ -75,8 +74,6 @@ public class PatientControllerTest {
     @Test
     public void findById_UnknownPatientId_ShouldReturnStatusIsNotFound() throws Exception {
         Patient patient = new Patient();
-        Address address = new Address();
-        patient.setAddress(address);
         when(patientService.findById(patient.getPatientId())).thenReturn(null);
         mockMvc.perform(
                 get("/patient/{id}", patient.getPatientId()))
@@ -87,13 +84,6 @@ public class PatientControllerTest {
 
     @Test
     public void create_NewPatient_ShouldCreateNewPatient() throws Exception {
-        Address address = new Address();
-        address.setAddressId(1);
-        address.setAddressLine1("123 Main St");
-        address.setAddressLine2(null);
-        address.setCity("Hershey");
-        address.setState("WA");
-        address.setZipCode(12345);
         Patient patient = new Patient();
         patient.setPatientId(1);
         patient.setFirstName("John");
@@ -106,7 +96,11 @@ public class PatientControllerTest {
         patient.setPhone("123-456-789");
         patient.setAdmitted(false);
         patient.setOtherDetails(null);
-        patient.setAddress(address);
+        patient.setAddressLine1("123 Main St");
+        patient.setAddressLine2(null);
+        patient.setCity("Hershey");
+        patient.setState("WA");
+        patient.setZipCode(12345);
         when(patientService.exists(patient)).thenReturn(false);
         doNothing().when(patientService).create(patient);
         mockMvc.perform(
@@ -123,8 +117,7 @@ public class PatientControllerTest {
     @Test
     public void create_ExistingPatient_ShouldReturnStatusIsConflict() throws Exception {
         Patient patient = new Patient();
-        Address address = new Address();
-        patient.setAddress(address);
+
         when(patientService.exists(patient)).thenReturn(true);
         mockMvc.perform(
                 post("/patient")
@@ -137,13 +130,7 @@ public class PatientControllerTest {
 
     @Test
     public void update_UpdatedPatient_ShouldUpdateExistingPatient() throws Exception {
-        Address address = new Address();
-        address.setAddressId(1);
-        address.setAddressLine1("123 Main St");
-        address.setAddressLine2(null);
-        address.setCity("Hershey");
-        address.setState("WA");
-        address.setZipCode(12345);
+
         Patient patient = new Patient();
         patient.setPatientId(1);
         patient.setFirstName("John");
@@ -156,7 +143,11 @@ public class PatientControllerTest {
         patient.setPhone("123-456-789");
         patient.setAdmitted(false);
         patient.setOtherDetails(null);
-        patient.setAddress(address);
+        patient.setAddressLine1("123 Main St");
+        patient.setAddressLine2(null);
+        patient.setCity("Hershey");
+        patient.setState("WA");
+        patient.setZipCode(12345);
         when(patientService.findById(patient.getPatientId())).thenReturn(patient);
         doNothing().when(patientService).update(patient);
         mockMvc.perform(
@@ -184,13 +175,7 @@ public class PatientControllerTest {
 
     @Test
     public void delete_KnownPatientId_ShouldDeletePatient() throws Exception {
-        Address address = new Address();
-        address.setAddressId(1);
-        address.setAddressLine1("123 Main St");
-        address.setAddressLine2(null);
-        address.setCity("Hershey");
-        address.setState("WA");
-        address.setZipCode(12345);
+
         Patient patient = new Patient();
         patient.setPatientId(1);
         patient.setFirstName("John");
@@ -203,7 +188,11 @@ public class PatientControllerTest {
         patient.setPhone("123-456-789");
         patient.setAdmitted(false);
         patient.setOtherDetails(null);
-        patient.setAddress(address);
+        patient.setAddressLine1("123 Main St");
+        patient.setAddressLine2(null);
+        patient.setCity("Hershey");
+        patient.setState("WA");
+        patient.setZipCode(12345);
         when(patientService.findById(patient.getPatientId())).thenReturn(patient);
         doNothing().when(patientService).delete(patient.getPatientId());
         mockMvc.perform(

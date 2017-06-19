@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Patient</title>
+    <link rel="stylesheet" href="../../static/css/style.css" data-th-href="@{/css/style.css}"/>
     <link rel="stylesheet" href="../../static/css/bootstrap.min.css" data-th-href="@{/css/bootstrap.min.css}"/>
 
     <!-- Optional theme -->
@@ -10,74 +11,74 @@
           data-th-href="@{/css/bootstrap-theme.min.css}"/>
 </head>
 <body>
-<main>
-    <nav class="navbar navbar-inverse navbar-static-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">Balance Web Development</a>
-            </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">About</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                           aria-expanded="false">Services<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Design</a></li>
-                            <li><a href="#">Development</a></li>
-                            <li><a href="#">Consulting</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">Contact</a></li>
+<nav class="navbar navbar-inverse navbar-static-top">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Balance Web Development</a>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">About</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                   aria-expanded="false">Services<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Design</a></li>
+                    <li><a href="#">Development</a></li>
+                    <li><a href="#">Consulting</a></li>
                 </ul>
-            </div>
-        </div>
-    </nav>
+            </li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+<main class="container">
+    <div>
+        <h1>Patient Records</h1>
+    </div>
     <div id="wrapper">
-        <h1>Patient Record</h1>
-        <p>
-            <b>Patient ID:</b><span th:text="${patient.patientId}">1020344</span>
-        </p>
-        <p>
-            <b>Name:</b><span th:text="${patient.firstName} + ' ' + ${patient.middleName} + ' ' + ${patient.lastName}">
-            John T. Sawyer</span>
-        </p>
-        <p>
-            <b>Address:</b> address
-        </p>
-        <p>
-            <b>Birthdate:</b> <span th:text="${#temporals.format(patient.birthDate, 'MM/dd/yyyy')}">5/32/1989</span>
-        </p>
-        <p>
-            <b>Gender:</b>
-            <spaan th:text="${patient.gender}">M</spaan>
-        </p>
-        <p>
-            <b>Height:</b> <span th:text="${patient.height}">77</span>
-        </p>
-        <p>
-            <b>Weight:</b> <span th:text="${patient.weight}">150</span>
-        </p>
-        <p>
-            <b>Phone Number:</b><span th:text="${patient.phone}">708-123-2345</span>
-        </p>
-        <p>
-            <b>Next of Kin:</b><span th:text="${patient.nextOfKin}"> Adam Baidy</span>
-        </p>
-        <p>
-            <b>Admit Status:</b> <span th:text="${patient.admitted}">False</span>
-        </p>
+
+        <div id="patientDetails">
+            <dl class="dl-horizontal">
+                <dt>Patient ID</dt>
+                <dd th:text="${patient.patientId}">1020344</dd>
+                <dt>Name</dt>
+                <dd th:text="${patient.firstName} + ' ' + ${patient.middleName} + ' ' + ${patient.lastName}">John T.
+                    Sawyer
+                </dd>
+                <dt>Address:</dt>
+                <dd>
+                    <address>
+                        <span th:text="${patient.addressLine1}">AddressLine1</span><br/>
+                        <th:block th:if="${patient.addressLine2 != null}"><span th:text="${patient.addressLine2}">AddressLine2</span><br/>
+                        </th:block>
+                        <span th:text="${patient.city} + ', ' + ${patient.state} + ', ' + ${patient.zipCode}">City, State, ZipCode</span>
+                    </address>
+                </dd>
+                <dt>Birthday</dt>
+                <dd th:text="${#temporals.format(patient.birthDate, 'MM/dd/yyyy')}">5/32/1989</dd>
+                <dt>Gender</dt>
+                <dd th:text="${patient.gender}">M</dd>
+                <dt>Height</dt>
+                <dd th:text="${patient.height}">77</dd>
+                <dt>Weight</dt>
+                <dd th:text="${patient.weight}">150</dd>
+                <dt>Phone Number:</dt>
+                <dd th:text="${patient.phone}">708-123-2345</dd>
+                <dt>Next of Kin</dt>
+                <dd th:text="${patient.nextOfKin}">John Singelton</dd>
+                <dt>Admit Status</dt>
+                <dd th:text="${patient.admitted}? 'Admitted' : 'Not Admitted'">Admitted</dd>
+            </dl>
+        </div>
     </div>
 </main>
-<footer>
-</footer>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 </body>

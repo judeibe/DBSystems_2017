@@ -14,6 +14,7 @@ public class PatientRecord implements Serializable {
     @Id
     @GeneratedValue
     long patientRecordId;
+
     @ManyToOne
     @JoinColumn(name = "patientId")
     private Patient patient;

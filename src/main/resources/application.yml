@@ -1,4 +1,5 @@
-
+server:
+    context-path: /health
 spring:
   datasource:
     url: jdbc:mysql://localhost:32770/health

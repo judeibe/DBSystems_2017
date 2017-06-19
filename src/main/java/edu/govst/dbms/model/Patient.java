@@ -1,6 +1,9 @@
 package edu.govst.dbms.model;
 
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -9,7 +12,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode(exclude = {"patientRecords", "admissions"})
+@ToString(exclude = {"patientRecords", "admissions"})
 @Table(name = "patient")
 public class Patient {
     @Id
@@ -47,17 +53,17 @@ public class Patient {
     private String state;
     private int zipCode;
 
-    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<PatientRecord> patientRecord = new HashSet<>();
+    @OneToMany(mappedBy = "patient")
+    private Set<PatientRecord> patientRecords = new HashSet<>();
 
-    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "patient")
     private Set<Admission> admissions = new HashSet<>();
 
 
     public Patient() {
     }
 
-    public Patient(String firstName, String middleName, String lastName, String gender, LocalDate birthDate, long height, long weight, String nextOfKin, String phone, Boolean admitted, String otherDetails, String addressLine1, String addressLine2, String city, String state, int zipCode, Set<PatientRecord> patientRecord, Set<Admission> admissions) {
+    public Patient(String firstName, String middleName, String lastName, String gender, LocalDate birthDate, long height, long weight, String nextOfKin, String phone, Boolean admitted, String otherDetails, String addressLine1, String addressLine2, String city, String state, int zipCode) {
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
@@ -74,7 +80,5 @@ public class Patient {
         this.city = city;
         this.state = state;
         this.zipCode = zipCode;
-        this.patientRecord = patientRecord;
-        this.admissions = admissions;
     }
 }

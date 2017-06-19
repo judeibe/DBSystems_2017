@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Add Patient</title>
+    <link rel="stylesheet" href="../../static/css/bootstrap.min.css" data-th-href="@{/css/bootstrap.min.css}"/>
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="../../static/css/bootstrap-theme.min.css"
+          data-th-href="@{/css/bootstrap-theme.min.css}"/>
+</head>
+<body>
+<main>
+    <nav class="navbar navbar-inverse navbar-static-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Balance Web Development</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">About</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">Services<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Design</a></li>
+                            <li><a href="#">Development</a></li>
+                            <li><a href="#">Consulting</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <main class="container">
+        <h1>Patient Form</h1>
+        <div id="patientForm">
+            <form class="form-horizontal" action="#" th:action="@{/patients/new}" method="post" th:object="${patient}">
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="firstName">First Name</label>
+                    <div class="col-sm-6">
+                        <input class="form-control" type="text" name="firstName" id="firstName" required="required"
+                               th:field="*{firstName}"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="middleName">Middle Name</label>
+                    <div class="col-sm-6">
+                        <input class="form-control" type="text" name="middleName" id="middleName"
+                               th:field="*{middleName}"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="lastName">Last Name</label>
+                    <div class="col-sm-6">
+                        <input class="form-control" type="text" id="lastName" th:field="*{lastName}"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="addressLine1">Address Line 1</label>
+                    <div class="col-sm-6">
+                        <input class="form-control" type="text" id="addressLine1" th:field="*{addressLine1}"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="birthDay">Birthdate</label>
+                    <div class="col-sm-6">
+                        <input class="form-control" type="date" id="birthDay" required="required"
+                               th:field="*{birthDate}"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="gender">Gender</label>
+                    <div class="col-sm-6">
+                        <input class="form-control" type="text" id="gender" required="required" th:field="*{gender}"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="height">Height in Inches</label>
+                    <div class="col-sm-6">
+                        <input class="form-control" type="text" id="height" required="required" th:field="*{height}"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="weight">Weight</label>
+                    <div class="col-sm-6">
+                        <input class="form-control" type="text" id="weight" required="required" th:field="*{weight}"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="phone">Phone Number</label>
+                    <div class="col-sm-6">
+                        <input class="form-control" type="text" id="phone" required="required" th:field="*{phone}"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="nextOfKin">Next of Kin</label>
+                    <div class="col-sm-6">
+                        <input class="form-control" type="text" id="nextOfKin" required="required"
+                               th:field="*{nextOfKin}"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="otherDetails">Other Details</label>
+                    <div class="col-sm-6">
+                        <textarea class="form-control" id="otherDetails" rows="3" th:field="*{otherDetails}"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="admitted">Admit Status</label>
+                    <div class="col-sm-6">
+                        <select class="form-control" id="admitted" th:field="*{admitted}">
+                            <option field="true" th:value="*{admitted}">Admitted</option>
+                            <option field="false" th:value="*{admitted}">Outpatient</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-6">
+                        <button class="btn btn-default" type="submit" field="Submit">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+</main>
+<footer>
+</footer>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+</body>
+</html>

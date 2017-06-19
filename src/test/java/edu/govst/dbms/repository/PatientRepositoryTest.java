@@ -21,8 +21,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class PatientRepositoryTest {
 
     private Patient firstPatient, secondPatient, thirdPatient, fourthPatient;
-    private Address firstAddress, secondAddress, thirdAddress, fourthAddress;
     private long id;
+
     @PersistenceContext
     private EntityManager em;
     @Autowired
@@ -30,12 +30,7 @@ public class PatientRepositoryTest {
 
     @Before
     public void SetUp() throws Exception {
-        firstAddress = new Address();
-        firstAddress.setAddressLine1("123 Main St");
-        firstAddress.setAddressLine2(null);
-        firstAddress.setCity("Hershey");
-        firstAddress.setState("WA");
-        firstAddress.setZipCode(12345);
+
 
         firstPatient = new Patient();
         firstPatient.setFirstName("John");
@@ -48,14 +43,11 @@ public class PatientRepositoryTest {
         firstPatient.setPhone("123-456-789");
         firstPatient.setAdmitted(false);
         firstPatient.setOtherDetails(null);
-        firstPatient.setAddress(firstAddress);
-
-        secondAddress = new Address();
-        secondAddress.setAddressLine1("354 Main St");
-        secondAddress.setAddressLine2(null);
-        secondAddress.setCity("Hershey");
-        secondAddress.setState("CA");
-        secondAddress.setZipCode(12346);
+        firstPatient.setAddressLine1("123 Main St");
+        firstPatient.setAddressLine2(null);
+        firstPatient.setCity("Hershey");
+        firstPatient.setState("WA");
+        firstPatient.setZipCode(12345);
 
         secondPatient = new Patient();
         secondPatient.setFirstName("Tom");
@@ -68,14 +60,12 @@ public class PatientRepositoryTest {
         secondPatient.setPhone("123-456-789");
         secondPatient.setAdmitted(false);
         secondPatient.setOtherDetails(null);
-        secondPatient.setAddress(secondAddress);
+        secondPatient.setAddressLine1("354 Main St");
+        secondPatient.setAddressLine2(null);
+        secondPatient.setCity("Hershey");
+        secondPatient.setState("CA");
+        secondPatient.setZipCode(12346);
 
-        thirdAddress = new Address();
-        thirdAddress.setAddressLine1("456 Main St");
-        thirdAddress.setAddressLine2(null);
-        thirdAddress.setCity("Hershey");
-        thirdAddress.setState("IL");
-        thirdAddress.setZipCode(62345);
 
         thirdPatient = new Patient();
         thirdPatient.setFirstName("Ryan");
@@ -88,14 +78,12 @@ public class PatientRepositoryTest {
         thirdPatient.setPhone("123-456-789");
         thirdPatient.setAdmitted(false);
         thirdPatient.setOtherDetails(null);
-        thirdPatient.setAddress(thirdAddress);
+        thirdPatient.setAddressLine1("456 Main St");
+        thirdPatient.setAddressLine2(null);
+        thirdPatient.setCity("Hershey");
+        thirdPatient.setState("IL");
+        thirdPatient.setZipCode(62345);
 
-        fourthAddress = new Address();
-        fourthAddress.setAddressLine1("123 Main St");
-        fourthAddress.setAddressLine2("Apt 3");
-        fourthAddress.setCity("Hershey");
-        fourthAddress.setState("NY");
-        fourthAddress.setZipCode(12645);
 
         fourthPatient = new Patient();
         fourthPatient.setFirstName("Jessica");
@@ -108,8 +96,11 @@ public class PatientRepositoryTest {
         fourthPatient.setPhone("123-456-789");
         fourthPatient.setAdmitted(false);
         fourthPatient.setOtherDetails(null);
-        fourthPatient.setAddress(fourthAddress);
-
+        fourthPatient.setAddressLine1("123 Main St");
+        fourthPatient.setAddressLine2("Apt 3");
+        fourthPatient.setCity("Hershey");
+        fourthPatient.setState("NY");
+        fourthPatient.setZipCode(12645);
 
     }
 

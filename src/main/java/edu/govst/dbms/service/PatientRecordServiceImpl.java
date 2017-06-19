@@ -18,6 +18,5 @@ public class PatientRecordServiceImpl implements PatientRecordService {
     @Override
     public void create(PatientRecord patientRecord) {
         patientRecordRepository.save(patientRecord);
-
     }
 }
